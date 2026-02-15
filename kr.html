@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hemath ❤️ Forever</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:black;
+  font-family:Segoe UI,sans-serif;
+  color:white;
+}
+
+/* ================= ENVELOPE ================= */
+
+#intro{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,#2a0012,#000);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.envelope{
+  width:350px;
+  height:220px;
+  position:relative;
+  cursor:pointer;
+}
+
+.envelope-body{
+  width:100%;
+  height:100%;
+  background:linear-gradient(135deg,#ff9acb,#ff2f92);
+  border-radius:15px;
+  box-shadow:0 0 40px pink,0 20px 40px black;
+  position:absolute;
+}
+
+.envelope-body:before{
+  content:"";
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:50%;
+  background:linear-gradient(135deg,#ff7fbf,#ff1493);
+  clip-path:polygon(0 100%,50% 0,100% 100%);
+}
+
+.envelope-flap{
+  position:absolute;
+  top:0;
+  width:100%;
+  height:55%;
+  background:linear-gradient(135deg,#ff69b4,#ff1493);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top;
+  transition:1.2s;
+}
+
+.envelope-title{
+  position:absolute;
+  width:100%;
+  top:45%;
+  text-align:center;
+  font-size:1.8rem;
+  font-weight:bold;
+  text-shadow:0 0 15px pink;
+}
+
+.envelope.open .envelope-flap{
+  transform:rotateX(180deg);
+}
+
+/* ================= MAIN ================= */
+
+#main{display:none;}
+
+.slideshow{
+  position:fixed;
+  inset:0;
+  z-index:-5;
+}
+
+.slideshow img{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:black;
+  opacity:0;
+  transition:1s;
+}
+
+.slideshow img.active{opacity:1;}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.3);
+  z-index:-4;
+}
+
+/* Rain */
+
+#photoRain,#textRain{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:2;
+}
+
+.rainPhoto{
+  position:absolute;
+  width:45px;
+  height:45px;
+  border-radius:6px;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  from{transform:translateY(-60px);}
+  to{transform:translateY(110vh);}
+}
+
+.rainText{
+  position:absolute;
+  color:pink;
+  font-size:1rem;
+  text-shadow:0 0 10px pink;
+  animation:rise linear forwards;
+}
+
+@keyframes rise{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-120vh);}
+}
+
+/* Pages */
+
+.page{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  opacity:0;
+  pointer-events:none;
+  transition:1s;
+}
+
+.page.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+h1{
+  color:#ff69b4;
+  text-shadow:0 0 15px pink;
+  margin-bottom:15px;
+}
+
+p{
+  max-width:650px;
+  line-height:1.8;
+  color:#ffd9ec;
+  margin-bottom:20px;
+}
+
+.btn{
+  background:pink;
+  border:none;
+  padding:12px 35px;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:1rem;
+}
+
+.finalBox{
+  max-width:750px;
+  background:rgba(255,105,180,0.25);
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 0 25px pink;
+  line-height:1.9;
+}
+
+/* Heart */
+
+.heart{
+  font-size:3rem;
+  animation:beat 1s infinite;
+}
+
+@keyframes beat{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.3);}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+
+<div id="intro">
+
+  <div class="envelope" onclick="openIntro()">
+
+    <div class="envelope-body"></div>
+
+    <div class="envelope-title">
+      Happy Valentine ❤️
+    </div>
+
+    <div class="envelope-flap"></div>
+
+  </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div id="main">
+
+<!-- Slideshow -->
+
+<div class="slideshow">
+  <img src="img1.jpg" class="active">
+  <img src="img2.jpg">
+  <img src="img3.jpg">
+  <img src="img4.jpg">
+</div>
+
+<div class="overlay"></div>
+
+<!-- Rain -->
+
+<div id="photoRain"></div>
+<div id="textRain"></div>
+
+<!-- Music -->
+
+<audio id="song" loop>
+  <source src="Munbe Vaa.mp3">
+</audio>
+
+<!-- Pages -->
+
+<div class="page active" id="p1">
+
+  <div class="heart">❤️</div>
+
+  <h1>Hey My Love…</h1>
+
+  <p>
+    I made this only for you.
+    From my heart.
+  </p>
+
+  <button class="btn" onclick="next()">Continue</button>
+
+</div>
+
+
+<div class="page" id="p2">
+
+  <h1>From That Day 💫</h1>
+
+  <p>
+    From the day you came into my life,
+    everything changed beautifully.
+  </p>
+
+  <button class="btn" onclick="next()">Next</button>
+
+</div>
+
+
+<div class="page" id="p3">
+
+  <h1>About You 💖</h1>
+
+  <p>
+    Your smile is my strength.
+    Your voice is my peace.
+    Your presence is my happiness.
+  </p>
+
+  <button class="btn" onclick="next()">Next</button>
+
+</div>
+
+
+<div class="page" id="p4">
+
+  <h1>One Question 💍</h1>
+
+  <p>
+    Will you walk with me
+    in every situation of life?
+  </p>
+
+  <button class="btn" onclick="yes()">Yes ❤️</button>
+
+</div>
+
+
+<!-- FINAL -->
+
+<div class="page" id="p5">
+
+  <h1>My Promise 💞</h1>
+
+  <div class="finalBox" id="typing"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* MUSIC */
+
+const song=document.getElementById("song");
+let musicStarted=false;
+
+function playMusic(){
+  if(!musicStarted){
+    song.play().catch(()=>{});
+    musicStarted=true;
+  }
+}
+
+/* INTRO */
+
+function openIntro(){
+
+  document.querySelector(".envelope").classList.add("open");
+  playMusic();
+
+  setTimeout(()=>{
+    document.getElementById("intro").style.display="none";
+    document.getElementById("main").style.display="block";
+  },1500);
+}
+
+/* PAGES */
+
+let page=1;
+
+function next(){
+  change(page+1);
+}
+
+function yes(){
+  change(5);
+  startTyping();
+}
+
+function change(n){
+
+  document.getElementById("p"+page).classList.remove("active");
+
+  setTimeout(()=>{
+    page=n;
+    document.getElementById("p"+page).classList.add("active");
+  },300);
+
+}
+
+/* SLIDESHOW FAST */
+
+const slides=document.querySelectorAll(".slideshow img");
+let index=0;
+
+setInterval(()=>{
+  slides[index].classList.remove("active");
+  index=(index+1)%slides.length;
+  slides[index].classList.add("active");
+},1800);
+
+
+/* FINAL MESSAGE */
+
+const finalMessage = `My love ❤️
+
+I’m not perfect.
+But my love for you is real.
+
+I may fail sometimes.
+But I’ll never fail to love you.
+
+When you smile,
+my world becomes beautiful.
+
+When you cry,
+my heart feels heavy.
+
+I promise…
+
+I will be loyal.
+I will be honest.
+I will be yours.
+
+In every situation,
+in every problem,
+in every happiness…
+
+I choose you.
+Again and again.
+Every lifetime.
+
+Forever yours 💕`;
+
+let i=0;
+const typing=document.getElementById("typing");
+const speed=28;
+
+function startTyping(){
+
+  typing.innerHTML="";
+  i=0;
+  loop();
+
+}
+
+function loop(){
+
+  if(i<finalMessage.length){
+    typing.innerHTML+=finalMessage.charAt(i++);
+    setTimeout(loop,speed);
+  }
+
+}
+
+
+/* PHOTO RAIN */
+
+const rainBox=document.getElementById("photoRain");
+const imgs=["img1.jpg","img2.jpg","img3.jpg","img4.jpg"];
+
+function photoRain(){
+
+  const i=document.createElement("img");
+  i.src=imgs[Math.floor(Math.random()*4)];
+  i.className="rainPhoto";
+
+  i.style.left=Math.random()*100+"%";
+  i.style.animationDuration=3+Math.random()*3+"s";
+
+  rainBox.appendChild(i);
+
+  setTimeout(()=>i.remove(),7000);
+}
+
+setInterval(photoRain,250);
+
+
+/* QUOTE RAIN */
+
+const textBox=document.getElementById("textRain");
+
+const quotes=[
+  "I Love You ❤️",
+  "My Life 💖",
+  "Forever 💫",
+  "Always Yours 💞"
+];
+
+function textRain(){
+
+  const t=document.createElement("div");
+  t.className="rainText";
+
+  t.innerText=quotes[Math.floor(Math.random()*quotes.length)];
+  t.style.left=Math.random()*90+"%";
+  t.style.animationDuration=3+Math.random()*2+"s";
+
+  textBox.appendChild(t);
+
+  setTimeout(()=>t.remove(),6000);
+}
+
+setInterval(textRain,1200);
+
+</script>
+
+</body>
+</html>
